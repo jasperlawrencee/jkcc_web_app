@@ -5,23 +5,25 @@ import { Home } from './pages/Home';
 import { Login } from './pages/Login';
 import { Orders } from './pages/Orders';
 import { Cooking } from './pages/Cooking';
+import { Signup } from './pages/Signup';
 import { Footer } from './components/Footer';
-// import { Sidenav } from './components/Sidenav';
+import About from './pages/About';
 
 
 export default function App() {
-  // const [showNav, setShowNav] = useState(false);
 
   return (
     <Router>
-      <div className="App overflow-hidden">
+      {/* Added Margin On Top for Topbar size */}
+      <div className="overflow-hidden w-full bg-zinc-800 mt-[64px]">
         <Topbar />
-        {/* <div>{showNav ? (<Sidenav onClose={() => setShowNav(false)}/>) : <Topbar onMenuClicked={() => setShowNav(true)}/>}</div> */}
         <div className='content'>
           <Routes>
             <Route path='/' element={<Home />}></Route>
             <Route path='/login' element={<Login />}></Route>
+            <Route path='/register' element={<Signup />}></Route>
             <Route path='/orders' element={<Orders />}></Route>
+            <Route path='/about' element={<About />}></Route>
             <Route path='/under-construction' element={<Cooking />}></Route>
           </Routes>
         </div>

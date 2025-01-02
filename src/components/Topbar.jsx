@@ -96,7 +96,7 @@ export const Topbar = () => {
           </li>
           <li>
             <a
-              href="/under-construction"
+              href="/about"
               className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
             >
               <IoInformationCircle />
