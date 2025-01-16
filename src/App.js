@@ -15,7 +15,7 @@ export default function App() {
   return (
     <Router>
       {/* Added Margin On Top for Topbar size */}
-      <div className="overflow-hidden w-full bg-zinc-800 mt-[64px]">
+      <div className="overflow-hidden w-full bg-white">
         <Topbar />
         <div className='content'>
           <Routes>

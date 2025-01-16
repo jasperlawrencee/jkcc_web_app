@@ -6,17 +6,15 @@ import logo from '../assets/jkccLogo.png';
 
 export const Footer = () => {
   return (
-    <footer className="flex flex-col w-full text-slate-50">
-      {/* Main Footer Section */}
-      <div className="bg-zinc-800 px-8 py-10 flex flex-wrap lg:flex-nowrap gap-8 justify-between items-start">
-        {/* Logo and Description */}
-        <div className="flex flex-col items-start gap-4">
+    <footer className="text-zinc-800 px-8 py-16 justify-center items-start flex flex-col gap-y-8 md:flex-row md:gap-x-40">
+          {/* Logo and Description */}
+        <div className="flex flex-col w-fit items-start gap-4">
           <div className="flex items-center gap-2">
             <img src={logo} alt="JKCC Logo" width={36} />
             <h1 className="text-2xl font-semibold">JKCC</h1>
           </div>
-          <p className="text-xs max-w-[380px] leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus tempus vulputate.
+          <p className="text-sm max-w-[380px] leading-relaxed">
+          Explore cutting-edge tech, expert repairs, and tailored IT solutions—because you deserve more. To God be the Glory!
           </p>
           <div className="flex gap-4">
             <a href="/" aria-label="Facebook">
@@ -32,7 +30,7 @@ export const Footer = () => {
         </div>
 
         {/* Useful Links */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 w-fit items-start">
           <h2 className="font-bold text-base">Useful Links</h2>
           <nav className="flex flex-col gap-2">
             <a href="/" className="hover:underline">
@@ -51,12 +49,12 @@ export const Footer = () => {
         </div>
 
         {/* Contact Information */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col w-fit gap-4 items-start">
           <h2 className="font-bold text-base">Contact Us</h2>
           <div className="flex items-center gap-3">
-            <IoLocationSharp size={30} />
+            <IoLocationSharp size={20} />
             <address className="not-italic text-sm leading-tight">
-              Purok 4, Barangay 5, Rosales Street San Francisco, Agusan del Sur
+              Purok 4, Barangay 5,<br/>Rosales Street San Francisco, Agusan del Sur
             </address>
           </div>
           <div className="flex items-center gap-3">
@@ -72,18 +70,6 @@ export const Footer = () => {
             </a>
           </div>
         </div>
-      </div>
-
-      {/* Bottom Footer Section */}
-      <div className="bg-slate-50 text-zinc-800 py-3 px-2 flex justify-center items-center gap-1.5 md:gap-3 lg:gap-6 text-sm">
-        <span className="font-bold">JKCC &copy; 2025</span>
-        <a href="/under-construction" className="hover:underline">
-          Privacy Policy
-        </a>
-        <a href="/under-construction" className="hover:underline">
-          Terms & Conditions
-        </a>
-      </div>
     </footer>
   );
 };
