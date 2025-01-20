@@ -27,6 +27,8 @@ export const Footer = () => {
               <FaFacebookMessenger size={20} />
             </a>
           </div>
+          <div className="w-full h-[1px] bg-black"></div>
+          <div className="">2025, Jasper Kissa Computer Center. All Rights Reserved</div>
         </div>
 
         {/* Useful Links */}

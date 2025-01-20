@@ -4,7 +4,7 @@ import { LuMapPin } from 'react-icons/lu'
 
 const About = () => {
   return (
-    <div className='text-slate-50 px-8 w-full h-fit flex-col justify-center items-start gap-2.5 inline-flex'>
+    <div className='text-zinc-800 px-8 w-full h-fit flex-col justify-center items-start gap-2.5 inline-flex'>
       {/* About Us */}
       <div className="flex items-center w-full justify-between">
         <div className="text-3xl font-semibold leading-9 mr-4">About Us</div>

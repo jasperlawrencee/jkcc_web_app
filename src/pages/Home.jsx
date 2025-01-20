@@ -2,14 +2,27 @@ import React from 'react'
 import buildingImg from "../assets/undraw_best-place_dhzp.svg"
 import { HiOutlineArrowTopRightOnSquare } from "react-icons/hi2";
 import { LuGift, LuHandshake, LuLock, LuPackage, LuRefreshCw } from 'react-icons/lu';
+import aboutImage from "../assets/aboutImage1.png";
+import abstract from "../assets/abstract.svg";
+import deliver from "../assets/deliver.svg";
+import order from "../assets/order.svg";
+import { PrimaryLink } from '../components/Button';
 
 export const Home = () => {
+
+  const images = [abstract, deliver, order]
+  const titles = ["Build", "Choose", "Deliver"]
+  const text = [
+    "Select Your Desired Parts from your case to your processor",
+    "Do You want it Prebuilt or Do You want To Build it Yourself?",
+    "Sit back as we handle the shipping to you",
+  ]
 
   return (
     <div className="h-fit w-full overflow-hidden">
       {/* Welcome */}
-      <div className="flex h-[100vh] w-full relative justify-center bg-gradient-to-t from-yellow-50 to-white overflow-hidden p-8">
-        <div className="flex flex-col mt-8">
+      <div className="flex min-h-screen w-full relative items-start justify-center bg-gradient-to-t from-yellow-50 to-white overflow-hidden p-8">
+        <div className="flex flex-col mt-12">
           <div className="font-semibold text-center leading-loose py-8 text-2xl md:text-3xl lg:text-5xl">
             Empower Your World with<br/>Jasper Kissa
           </div>
@@ -18,15 +31,15 @@ export const Home = () => {
           </div>
 
           <div className="flex gap-x-4 items-center justify-center mt-8 text-white">
-            <a href='/under-construction'
-            className='bg-zinc-800 px-4 py-2 rounded-lg'
-            >
-              Browse Categories</a>
-            <a href='/about'
-            className='bg-zinc-800 px-3 py-2 rounded-lg flex items-center gap-3'>
-              About Us
-              <HiOutlineArrowTopRightOnSquare />
-              </a>
+            <PrimaryLink 
+            route="/under-construction"
+            label="Browse Categories"
+            />
+            <PrimaryLink 
+            route="/about"
+            label="About Us"
+            icon={<HiOutlineArrowTopRightOnSquare />}
+            />
           </div>
         </div>
 
@@ -36,7 +49,12 @@ export const Home = () => {
       </div>
 
       {/* Offerings */}
-      {/* <div className="flex justify-center items-center py-16 gap-x-16">
+      <div className="flex gap-x-2 md:gap-x-4 text-2xl md:text-4xl lg:text-5xl font-bold justify-center py-12 px-8">
+        <p>What</p>
+        <p>we</p>
+        <p>provide?</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:flex justify-center gap-16 px-8 py-16">
         {offeringIcons.map((icon, index) => (
           <div 
           key={index}
@@ -48,13 +66,39 @@ export const Home = () => {
             </div>
           </div>
         ))}
-      </div> */}
+      </div>
 
+      {/* Create Your Own PC */}
+      <div className="flex flex-col w-full h-fit md:h-[90vh] px-8 py-16 items-center justify-start gap-y-16 bg-slate-50">
+        <p className='text-3xl md:text-4xl lg:text-5xl font-bold text-center w-full'>Get Your own PC in 3 Steps</p>
+        <div className="flex flex-col md:flex-row w-full h-fit justify-center items-center md:items-start gap-x-16 gap-y-8">
+          {images.map((image, index) => (
+            <div className="flex flex-col justify-between items-center gap-y-4 max-w-[350px] md:h-[350px] w-fit text-center">
+              <div className="flex flex-col">
+                <div className="font-semibold text-2xl leading-9">{titles[index]}</div>
+                <div className='leading-7'>{text[index]}</div>
+              </div>
+              <img src={image} alt={titles[index]} className='h-50 w-50 md:h-50 md:w-50'/>
+            </div>
+          ))}
+        </div>
 
-      {/* Services */}
-      {/* <div className="w-full h-[100vh]">
-        
-      </div> */}
+      </div>
+
+      {/* Why jasper kissa? */}
+      <div className="text-3xl md:text-4xl lg:text-5xl font-bold w-full text-center pt-14 mb-8">Why Jasper Kissa?</div>
+      <div className="flex flex-col md:flex-row h-fit w-full md:justify-center items-start px-8 py-8 gap-8">
+        <img src={aboutImage} alt="aboutImage" className='h-fit'/>
+        <div className="flex flex-col gap-2 md:w-[35%]">
+          <div className="text-lg md:text-xl font-bold">Your Trusted Partner in Tech Excellence</div>
+          <div className="w-fit">From providing you with high-performance PC parts to expert repairs and tailored IT solutions, Jasper Kissa Computer Center is here to power your digital journey.</div>
+          <PrimaryLink 
+          route="/about"
+          label="Learn More"
+          icon={<HiOutlineArrowTopRightOnSquare />}
+          />
+        </div>
+      </div>
 
     </div>
   )

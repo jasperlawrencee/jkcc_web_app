@@ -6,9 +6,9 @@ import {
   IoGrid, 
   IoBag, 
   IoInformationCircle, 
-  IoPersonCircleOutline 
 } from "react-icons/io5";
 import logo from "../assets/jkccLogo.png"
+import { LuArrowRight } from "react-icons/lu";
 
 export const Topbar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -20,7 +20,7 @@ export const Topbar = () => {
   return (
     <div className="relative w-full">
       {/* Topbar */}
-      <div className="flex fixed w-full h-[64px] bg-white px-8 top-0 z-50 py-4 justify-center items-center gap-x-40">
+      <div className="flex fixed w-full h-20 bg-white px-8 top-0 z-50 py-4 justify-center items-center gap-x-28 shadow-sm">
         {/* Sidebar Button */}
         <div className="lg:hidden text-zinc-800 w-full">
           <button onClick={toggleSidebar}>
@@ -29,7 +29,7 @@ export const Topbar = () => {
         </div>
 
         {/* Logo with Text */}
-        <a className="hidden lg:flex gap-2.5 justify-center items-center text-zinc-800 text-base font-semibold">
+        <a href="/" className="hidden lg:flex gap-2.5 justify-center items-center text-zinc-800 text-base font-semibold">
           <img src={logo} alt="logo" width={36}/>
           <p className="flex w-full">Expert in Computers | Expect More</p>
         </a>
@@ -43,29 +43,25 @@ export const Topbar = () => {
         </div>
 
         {/* Login Tab */}
-          <div className="text-zinc-800 text-sm font-semibold leading-7 items-center justify-end flex gap-x-4 w-fit">
-            <a href="/login">
-              <IoPersonCircleOutline size={32} />
-            </a>
-            <a href="/login" className="hidden lg:flex hover:underline">
+          <div className="text-sm font-semibold items-center justify-end flex gap-x-4">
+            <a href="/login" className="hidden lg:flex hover:underline text-zinc-800">
               Login
+            </a>
+            <a href="/register"
+            className="flex hover:underline text-white bg-zinc-800 rounded-xl px-4 py-2 items-center justify-center gap-x-2 w-[138px]">
+              Sign Up Now
+              <LuArrowRight 
+              className="hidden lg:flex"
+              />
             </a>
           </div>
       </div>
 
       {/* Sidebar */}
       {isSidebarOpen && (
-        <div className="fixed top-[64px] left-0 w-full h-[calc(100vh-64px)] text-zinc-800 flex text-left space-y-1 list-none z-40 lg:hidden">
+        <div className="fixed top-20 left-0 w-full h-[calc(100vh-80px)] text-zinc-800 flex text-left space-y-1 list-none z-40 lg:hidden">
           <div className="w-[45%] bg-white h-full p-4">
           <div className="flex justify-between w-full items-center mb-4">
-            <div className="flex items-center gap-2">
-              <a href="/login">
-                <IoPersonCircleOutline size={32} />
-              </a>
-              <a href="/login" className="hover:underline">
-                Login
-              </a>
-            </div>
             <div>
               <button onClick={toggleSidebar}>
                 <IoChevronBackOutline size={20} />
