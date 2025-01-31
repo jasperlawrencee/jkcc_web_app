@@ -6,7 +6,8 @@ import logo from '../assets/jkccLogo.png';
 
 export const Footer = () => {
   return (
-    <footer className="text-zinc-800 px-8 py-16 justify-center items-start flex flex-col gap-y-8 md:flex-row md:gap-x-40">
+    <footer className="text-zinc-800 px-8 py-16 w-full flex justify-center">
+        <div className="lg:w-[60vw] w-full justify-between gap-y-8 flex flex-col md:flex-row md:gap-x-40">
           {/* Logo and Description */}
         <div className="flex flex-col w-fit items-start gap-4">
           <div className="flex items-center gap-2">
@@ -71,6 +72,7 @@ export const Footer = () => {
               +63 912 345 6789
             </a>
           </div>
+        </div>
         </div>
     </footer>
   );

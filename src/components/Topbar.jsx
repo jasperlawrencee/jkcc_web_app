@@ -39,7 +39,7 @@ export const Topbar = () => {
           <a href="/" className="hover:underline">Home</a>
           <a href="/about" className="hover:underline">About</a>
           <a href="/under-construction" className="hover:underline">Browse</a>
-          <a href="/under-construction" className="hover:underline">Contact Us</a>
+          <a href="/under-construction" className="hover:underline">Build Your Own PC</a>
         </div>
 
         {/* Login Tab */}

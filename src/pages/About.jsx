@@ -1,23 +1,31 @@
 import React from 'react'
+import about from '../assets/about.svg'
 import { LuMapPin } from 'react-icons/lu'
 
 
 const About = () => {
   return (
-    <div className='text-zinc-800 px-8 w-full h-fit flex-col justify-center items-start gap-2.5 inline-flex'>
-      {/* About Us */}
-      <div className="flex items-center w-full justify-between">
-        <div className="text-3xl font-semibold leading-9 mr-4">About Us</div>
-        <div className="h-[1px] w-full bg-yellow-300 grow shrink basis-0"></div>
-      </div>
-      <div className="text-base font-bold leading-7 w-full">
-        Your trusted partner in technology solutions
-      </div>
-      <div className="text-base font-normal leading-7 w-full">
-        At Jasper Kissa Computer Center, we believe technology should enhance your life, not complicate it. Our journey began with a simple vision: to bring reliable, affordable, and expert computer services to our community. Today, with multiple branches, we’re proud to be a trusted name in tech solutions
+    <div className='text-zinc-800 w-full h-fit flex-col justify-center items-center gap-2.5 inline-flex mt-20 relative'>
+      <div className="flex flex-col items-center bg-yellow-50 w-full gap-y-4 p-8">
+        <div className="flex text-3xl font-semibold leading-9 mr-4 pt-8">
+          <p className='underline-offset-8 underline decoration-yellow-300'>About Us</p>
+        </div>
+        <div className="flex items-center justify-between lg:w-[60vw] w-full md:gap-x-4 ">
+          <div className="flex flex-col lg:w-[60vw] w-full h-[40vh] justify-center items-start">
+            <div className="text-base font-bold leading-7">
+              Your trusted partner in technology solutions
+            </div>
+            <div className="text-base font-normal leading-7 lg:w-[60%] w-full h-fit">
+            At Jasper Kissa Computer Center, we believe technology should enhance your life, not complicate it. Our journey began with a simple vision: to bring reliable, affordable, and expert computer services to our community. Today, with multiple branches, we`re proud to be a trusted name in tech solutions
+            </div>
+          </div>
+          <div className="hidden md:flex">
+            <img src={about} alt="about" className='h-96 w-h-96'/>
+          </div>
+        </div>
       </div>
       {/* Mission Vision */}
-      <div className="py-3 flex-col justify-center items-center gap-2.5 inline-flex w-full">
+      {/* <div className="py-3 flex-col justify-center items-center gap-2.5 inline-flex w-full">
         <div className="text-center text-2xl font-semibold leading-loose">OUR MISSION & VALUES</div>
         <div className="text-center text-base font-normal leading-7 w-full mb-8">
         Jasper Kissa aims to provide unparalleled service by focusing on our customers’ needs and offer services with honesty, transparency, and a passion for technology
@@ -32,9 +40,9 @@ const About = () => {
             <div className="self-stretch text-base font-normal leading-7">At Jasper Kissa Computer Center, our vision is to be the leading provider of innovative and reliable computer solutions, empowering communities and businesses with cutting-edge technology. We aspire to grow and evolve, expanding our reach both local and online, while maintaining our commitment to exceptional customer service and technical excellence.</div>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Contact Us */}
-      <div className="py-4 w-full">
+      {/* <div className="py-4 w-full">
         <div className="text-3xl text-center font-semibold leading-9 mb-4">COME VISIT US</div>
           <div className="py-4 h-fit gap-y-8 justify-center items-center flex-col flex">
             <div className="flex-col justify-center items-center gap-2.5 inline-flex w-fit">
@@ -65,10 +73,10 @@ const About = () => {
               <div className="text-center text-base leading-7">H.M. Tan Bldg. Purok 7, Arabeo St., Davao de Oro</div>
             </div>
           </div>
-      </div>
+      </div> */}
 
       {/* Opening Hours */}
-      <div className="flex flex-col gap-y-2.5">
+      {/* <div className="flex flex-col gap-y-2.5">
         <div className="text-3xl font-semibold leading-9">Opening Hours</div>
           <div className="text-base font-normal leading-7">Monday - Saturday:</div>
           <div className="text-base font-normal leading-7">8:00 am - 6:00 pm</div>
@@ -81,7 +89,7 @@ const About = () => {
           <div className="text-3xl font-semibold leading-9">Visit our FB Page</div>
           <a href='https://www.facebook.com/JKCCofficial' target='_blank' rel='noreferrer' className="text-blue-400 underline">facebook.com/JKCCofficial</a>
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }
