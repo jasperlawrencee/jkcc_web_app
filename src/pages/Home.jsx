@@ -1,22 +1,52 @@
 import React from 'react'
 import buildingImg from "../assets/undraw_best-place_dhzp.svg"
 import { HiOutlineArrowTopRightOnSquare } from "react-icons/hi2";
-import { LuGift, LuHandshake, LuLock, LuPackage, LuRefreshCw } from 'react-icons/lu';
+import { LuArrowRight, LuGift, LuHandshake, LuLock, LuPackage, LuRefreshCw } from 'react-icons/lu';
+import { PrimaryLink } from '../components/Button';
+import Faq from "react-faq-component";
 import aboutImage from "../assets/aboutImage1.png";
 import abstract from "../assets/abstract.svg";
 import deliver from "../assets/deliver.svg";
 import order from "../assets/order.svg";
-import { PrimaryLink } from '../components/Button';
 
 export const Home = () => {
 
-  const images = [abstract, deliver, order]
-  const titles = ["Build", "Choose", "Deliver"]
+  const images = [abstract, deliver, order];
+  const titles = ["Build", "Choose", "Deliver"];
   const text = [
     "Select Your Desired Parts from your case to your processor",
     "Do You want it Prebuilt or Do You want To Build it Yourself?",
     "Sit back as we handle the shipping to you",
-  ]
+  ];
+  
+  const data = {
+    rows: [
+        {
+          title: <p className='font-bold'>What services do you offer?</p>,
+          content: <p>We provide personalized IT consultations, computer repair and upgrade services, and network setup and support.
+            We also offer custom-build PCs where you can choose from our pre-built selections or customize a PC based on your needs and budget.</p>,
+        },
+        { title: <p className='font-bold'>How can I contact you?</p>,
+          content: <p>You can reach us via our About Us page, where you'll find our phone numbers, our Facebook page, and a contact form.</p>,
+        },
+        {
+          title: <p className='font-bold'>What are your operating hours?</p>,
+          content: <p>Our centers are open Monday to Saturday from 8 AM to 5 PM (PST)</p>,
+        },
+    ],
+  };
+
+  const styles = {
+    bgColor: 'white',
+    titleTextColor: "black",
+    rowTitleColor: "black",
+  };
+
+  const config = {
+    animate: true,
+    // arrowIcon: "V",
+    tabFocus: true
+  };
 
   return (
     <div className="h-fit w-full overflow-hidden">
@@ -49,10 +79,13 @@ export const Home = () => {
       </div>
 
       {/* Offerings */}
-      <div className="flex gap-x-2 md:gap-x-4 text-2xl md:text-4xl lg:text-5xl font-bold justify-center py-12 px-8">
-        <p>What</p>
-        <p>we</p>
-        <p>provide?</p>
+      <div className="flex flex-col h-fit w-full items-start md:items-center justify-center pt-12 gap-y-4 px-8">
+        <div className="text-2xl md:text-4xl lg:text-5xl font-bold justify-center text-start md:text-center">
+          Our Mission & Values
+        </div>
+        <div className="flex text-start md:text-center text-lg font-normal leading-7 w-full md:w-[60vw]">
+          Jasper Kissa aims to provide unparalleled service by focusing on our customers’ needs and offer services with honesty, transparency, and a passion for technology
+        </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:flex justify-center gap-16 px-8 py-16">
         {offeringIcons.map((icon, index) => (
@@ -66,11 +99,30 @@ export const Home = () => {
             </div>
           </div>
         ))}
+      
+      </div>
+      <div className="w-full md:items-center md:justify-center flex px-8 pb-12">
+        <div className="w-full md:w-[60vw] flex flex-col gap-8 md:flex-row items-start justify-between">
+          <div className="flex w-full text-2xl font-bold">Explore Our Comprehensive IT Services</div>
+          <div className="flex flex-col w-full gap-y-4">
+            <div className="text-lg">At Jasper Kissa Computer Center, we offer a range of expert IT services designed to meet your needs. From personalized consultations to reliable network support, our team is here to help you succeed.</div>
+            <div className="flex gap-x-8">
+              <div className="flex flex-col gap-y-4 w-full">
+                <div className="font-bold text-xl">It Consultations</div>
+                <p>Tailored advice to enhance your technology efficiency and productivity.</p>
+              </div>
+              <div className="flex flex-col gap-y-4 w-full">
+                <div className="font-bold text-xl">Repair Services</div>
+                <p>Fast and reliable solutions for all your computer issues.</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Create Your Own PC */}
-      <div className="flex flex-col w-full h-fit md:h-[90vh] px-8 py-16 items-center justify-start gap-y-16 bg-slate-50">
-        <p className='text-3xl md:text-4xl lg:text-5xl font-bold text-center w-full'>Get Your own PC in 3 Steps</p>
+      <div className="flex flex-col w-full md:h-[95vh] px-8 py-16 items-center justify-between gap-y-16 bg-slate-50">
+        <p className='text-3xl md:text-4xl lg:text-5xl font-bold text-center w-full'>Grab Your own PC in 3 Steps</p>
         <div className="flex flex-col md:flex-row w-full h-fit justify-center items-center md:items-start gap-x-16 gap-y-8">
           {images.map((image, index) => (
             <div className="flex flex-col justify-between items-center gap-y-4 max-w-[350px] md:h-[350px] w-fit text-center">
@@ -82,23 +134,48 @@ export const Home = () => {
             </div>
           ))}
         </div>
+        <div className="flex flex-col items-center justify-center gap-y-4">
+          <p className='text-xl font-bold text-center'>Build Your Dream PC Today</p>
+          <p className='text-center'>Customize your own or choose from our high-performance pre-built rigs!</p>
+          <PrimaryLink
+          route="/under-construction"
+          label="Get Started"
+          icon={<LuArrowRight/>}
+          />
+        </div>
 
       </div>
 
       {/* Why jasper kissa? */}
-      <div className="text-3xl md:text-4xl lg:text-5xl font-bold w-full text-center pt-14 mb-8">Why Jasper Kissa?</div>
-      <div className="flex flex-col md:flex-row h-fit w-full md:justify-center items-start px-8 py-8 gap-8">
-        <img src={aboutImage} alt="aboutImage" className='h-fit'/>
-        <div className="flex flex-col gap-2 md:w-[35%]">
-          <div className="text-lg md:text-xl font-bold">Your Trusted Partner in Tech Excellence</div>
-          <div className="w-fit">From providing you with high-performance PC parts to expert repairs and tailored IT solutions, Jasper Kissa Computer Center is here to power your digital journey.</div>
-          <PrimaryLink 
-          route="/about"
-          label="Learn More"
-          icon={<HiOutlineArrowTopRightOnSquare />}
+      <div className="flex flex-col w-full px-8 justify-center items-center bg-slate-200">
+        <div className="text-2xl md:text-3xl lg:text-4xl font-bold w-full text-center pt-14 mb-8">Why Jasper Kissa?</div>
+        <div className="flex flex-col md:flex-row h-fit w-full md:justify-center items-start py-8 gap-8">
+          <img src={aboutImage} alt="aboutImage" className='h-fit'/>
+          <div className="flex flex-col gap-2 md:w-[35%]">
+            <div className="text-lg md:text-xl font-bold">Your Trusted Partner in Tech Excellence</div>
+            <div className="w-fit">From providing you with high-performance PC parts to expert repairs and tailored IT solutions, Jasper Kissa Computer Center is here to power your digital journey.</div>
+            <PrimaryLink 
+            route="/about"
+            label="Learn More"
+            icon={<HiOutlineArrowTopRightOnSquare />}
+            />
+          </div>
+          {/* Testimonials */}
+        </div>
+      </div>
+
+      {/* FAQs */}
+      <div className="flex flex-col w-full h-fit px-8 py-16 items-center justify-center gap-y-16">
+        <p className='font-bold text-2xl md:text-3xl lg:text-4xl text-center'>Frequently Asked Questions</p>
+        <div className="w-full md:w-[60vw]">
+          <Faq
+            data={data}
+            styles={styles}
+            config={config}
           />
         </div>
       </div>
+      {/* Need More Help? */}
 
     </div>
   )

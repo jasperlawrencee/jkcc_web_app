@@ -24,23 +24,6 @@ const About = () => {
           </div>
         </div>
       </div>
-      {/* Mission Vision */}
-      {/* <div className="py-3 flex-col justify-center items-center gap-2.5 inline-flex w-full">
-        <div className="text-center text-2xl font-semibold leading-loose">OUR MISSION & VALUES</div>
-        <div className="text-center text-base font-normal leading-7 w-full mb-8">
-        Jasper Kissa aims to provide unparalleled service by focusing on our customers’ needs and offer services with honesty, transparency, and a passion for technology
-        </div>
-        <div className="flex flex-col md:flex-row justify-between gap-2.5">
-          <div className="p-8 bg-yellow-300 rounded-lg flex-col justify-center items-start gap-2.5 inline-flex  w-full text-zinc-800">
-            <div className="text-base font-bold leading-7">Our Mission</div>
-            <div className="self-stretch text-base font-normal leading-7">At Jasper Kissa Computer Center, we foster a family-like culture where every team member is encouraged to give their best in fulfilling their roles. With the grace of God guiding our efforts, our mission is to provide our customers with top-quality products and unparalleled customer service. We are dedicated to ensuring client satisfaction through innovative, reliable, and cost-effective solutions that meet the evolving needs of the communities we serve.</div>
-          </div>
-          <div className="p-8 bg-yellow-300 rounded-lg flex-col justify-start items-start gap-2.5 inline-flex w-full text-zinc-800">
-            <div className="text-base font-bold leading-7">Our Vision</div>
-            <div className="self-stretch text-base font-normal leading-7">At Jasper Kissa Computer Center, our vision is to be the leading provider of innovative and reliable computer solutions, empowering communities and businesses with cutting-edge technology. We aspire to grow and evolve, expanding our reach both local and online, while maintaining our commitment to exceptional customer service and technical excellence.</div>
-          </div>
-        </div>
-      </div> */}
       {/* Contact Us */}
       {/* <div className="py-4 w-full">
         <div className="text-3xl text-center font-semibold leading-9 mb-4">COME VISIT US</div>

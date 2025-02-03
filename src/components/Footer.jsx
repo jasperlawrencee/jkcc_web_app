@@ -6,10 +6,10 @@ import logo from '../assets/jkccLogo.png';
 
 export const Footer = () => {
   return (
-    <footer className="text-zinc-800 px-8 py-16 w-full flex justify-center">
-        <div className="lg:w-[60vw] w-full justify-between gap-y-8 flex flex-col md:flex-row md:gap-x-40">
+    <footer className="text-zinc-800 p-8 w-full flex justify-center">
+        <div className="lg:w-[60vw] w-full justify-between gap-y-8 flex flex-col lg:flex-row md:gap-x-40">
           {/* Logo and Description */}
-        <div className="flex flex-col w-fit items-start gap-4">
+        <div className="flex flex-col w-full items-start gap-4">
           <div className="flex items-center gap-2">
             <img src={logo} alt="JKCC Logo" width={36} />
             <h1 className="text-2xl font-semibold">JKCC</h1>
@@ -33,26 +33,26 @@ export const Footer = () => {
         </div>
 
         {/* Useful Links */}
-        <div className="flex flex-col gap-4 w-fit items-start">
+        <div className="flex flex-col gap-4 w-full items-start">
           <h2 className="font-bold text-base">Useful Links</h2>
           <nav className="flex flex-col gap-2">
             <a href="/" className="hover:underline">
               Home
             </a>
-            <a href="/under-construction" className="hover:underline">
-              Brands
-            </a>
-            <a href="/under-construction" className="hover:underline">
-              Categories
-            </a>
             <a href="/about" className="hover:underline">
               About Us
+            </a>
+            <a href="/under-construction" className="hover:underline">
+              Browse
+            </a>
+            <a href="/under-construction" className="hover:underline">
+              Custom PC
             </a>
           </nav>
         </div>
 
         {/* Contact Information */}
-        <div className="flex flex-col w-fit gap-4 items-start">
+        <div className="flex flex-col w-full gap-4 items-start">
           <h2 className="font-bold text-base">Contact Us</h2>
           <div className="flex items-center gap-3">
             <IoLocationSharp size={20} />
