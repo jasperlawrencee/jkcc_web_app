@@ -6,8 +6,10 @@ import logo from '../assets/jkccLogo.png';
 
 export const Footer = () => {
   return (
-    <footer className="text-zinc-800 p-8 w-full flex justify-center">
-        <div className="lg:w-[60vw] w-full justify-between gap-y-8 flex flex-col lg:flex-row md:gap-x-40">
+    <footer className="text-zinc-800 p-8 w-full flex gap-y-4 justify-center items-center">
+        <div className="flex flex-col lg:w-[60vw] w-full gap-y-8">
+        <div className="w-fit">
+        <div className="lg:w-[60vw] w-full justify-between flex flex-col lg:flex-row md:gap-x-40">
           {/* Logo and Description */}
         <div className="flex flex-col w-full items-start gap-4">
           <div className="flex items-center gap-2">
@@ -15,7 +17,7 @@ export const Footer = () => {
             <h1 className="text-2xl font-semibold">JKCC</h1>
           </div>
           <p className="text-sm max-w-[380px] leading-relaxed">
-          Explore cutting-edge tech, expert repairs, and tailored IT solutions—because you deserve more. To God be the Glory!
+          Explore cutting-edge tech, expert repairs, and tailored IT solutions—because you deserve more
           </p>
           <div className="flex gap-4">
             <a href="/" aria-label="Facebook">
@@ -28,8 +30,6 @@ export const Footer = () => {
               <FaFacebookMessenger size={20} />
             </a>
           </div>
-          <div className="w-full h-[1px] bg-black"></div>
-          <div className="">2025, Jasper Kissa Computer Center. All Rights Reserved</div>
         </div>
 
         {/* Useful Links */}
@@ -73,6 +73,12 @@ export const Footer = () => {
             </a>
           </div>
         </div>
+        </div>
+        </div>
+    <div className="w-full">
+      <div className="w-full h-[1px] bg-black"></div>
+      <div className="">2025, Jasper Kissa Computer Center. All Rights Reserved</div>
+    </div>
         </div>
     </footer>
   );
