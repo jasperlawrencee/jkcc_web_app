@@ -55,13 +55,13 @@ const About = () => {
               <div className="text-center text-base leading-7">Purok 4, Barangay 5, San Francisco Agusan del Sur</div>
             </div>
             <div className="flex-col justify-center items-center gap-2.5 inline-flex w-fit">
-              <a href="https://maps.app.goo.gl/gz3N9QwsWpeTysAFA" target='_blank' rel='noreferrer'>
+              <a href="https://maps.app.goo.gl/WF3PxEPKUVcirBZD8" target='_blank' rel='noreferrer'>
                 <div className="flex gap-x-2.5 text-center text-base font-bold underline leading-7 items-center">
                 Trento Branch
                 <LuMapPin />
                 </div>
               </a>
-              <div className="text-center text-base leading-7">Ambot asa, Agusan del Sur</div>
+              <div className="text-center text-base leading-7">Pan-Philippine Highway, Trento, Agusan del Sur</div>
             </div>
             <div className="flex-col justify-center items-center gap-2.5 inline-flex w-fit">
               <a href="https://maps.app.goo.gl/pNGYSFZfXB2DctsA9" target='_blank' rel='noreferrer'>

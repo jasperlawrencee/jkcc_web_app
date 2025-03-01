@@ -55,19 +55,19 @@ export const Footer = () => {
         <div className="flex flex-col w-full gap-4 items-start">
           <h2 className="font-bold text-base">Contact Us</h2>
           <div className="flex items-center gap-3">
-            <IoLocationSharp size={20} />
+            <IoLocationSharp className='w-6 h-6' />
             <address className="not-italic text-sm leading-tight">
               Purok 4, Barangay 5,<br/>Rosales Street San Francisco, Agusan del Sur
             </address>
           </div>
           <div className="flex items-center gap-3">
-            <IoMail size={20} />
+            <IoMail className='w-6 h-6' />
             <a href="mailto:jasperkissa@gmail.com" className="text-sm leading-tight hover:underline">
               jasperkissa@gmail.com
             </a>
           </div>
           <div className="flex items-center gap-3">
-            <MdPhone size={20} />
+            <MdPhone className='w-6 h-6' />
             <a href="tel:+639123456789" className="text-sm leading-tight hover:underline">
               +63 912 345 6789
             </a>

@@ -9,6 +9,8 @@ import abstract from "../assets/abstract.svg";
 import deliver from "../assets/deliver.svg";
 import order from "../assets/order.svg";
 
+
+
 export const Home = () => {
 
   const images = [abstract, deliver, order];
@@ -31,7 +33,7 @@ export const Home = () => {
         },
         {
           title: <p className='font-bold'>What are your operating hours?</p>,
-          content: <p>Our centers are open Monday to Saturday from 8 AM to 5 PM (PST)</p>,
+          content: <p>Our centers are open Monday to Saturday from 8 AM to 6 PM (PST)</p>,
         },
     ],
   };
@@ -62,6 +64,7 @@ export const Home = () => {
 
           <div className="flex gap-x-4 items-center justify-center mt-8 text-white">
             <PrimaryLink 
+            icon={undefined}
             route="/under-construction"
             label="Browse Categories"
             />
@@ -143,7 +146,6 @@ export const Home = () => {
           icon={<LuArrowRight/>}
           />
         </div>
-
       </div>
 
       {/* Why jasper kissa? */}

@@ -9,6 +9,7 @@ import {
 } from "react-icons/io5";
 import logo from "../assets/jkccLogo.png"
 import { LuArrowRight } from "react-icons/lu";
+import React from "react";
 
 export const Topbar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -47,8 +48,9 @@ export const Topbar = () => {
             <a href="/login" className="hidden lg:flex hover:underline text-zinc-800">
               Login
             </a>
+            {/* change button when small screen */}
             <a href="/register"
-            className="flex hover:underline text-white bg-zinc-800 rounded-xl px-4 py-2 items-center justify-center gap-x-2 w-[138px]">
+            className="flex hover:underline text-white bg-zinc-800 rounded-xl px-4 py-2 items-center justify-center gap-x-2 w-fit min-w-[120px]">
               Sign Up Now
               <LuArrowRight 
               className="hidden lg:flex"

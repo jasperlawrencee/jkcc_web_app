@@ -8,23 +8,23 @@ import { Cooking } from './pages/Cooking';
 import { Signup } from './pages/Signup';
 import { Footer } from './components/Footer';
 import About from './pages/About';
+import React from 'react';
 
 
 export default function App() {
 
   return (
     <Router>
-      {/* Added Margin On Top for Topbar size */}
       <div className="overflow-hidden w-full bg-white text-zinc-800">
         <Topbar />
-        <div className='content'>
+        <div className="content">
           <Routes>
-            <Route path='/' element={<Home />}></Route>
-            <Route path='/login' element={<Login />}></Route>
-            <Route path='/register' element={<Signup />}></Route>
-            <Route path='/orders' element={<Orders />}></Route>
-            <Route path='/about' element={<About />}></Route>
-            <Route path='/under-construction' element={<Cooking />}></Route>
+            <Route path='/' element={<Home />}/>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/register' element={<Signup/>}/>
+            <Route path='/orders' element={<Orders/>}/>
+            <Route path='/about' element={<About/>}/>
+            <Route path='/under-construction' element={<Cooking/>}/>
           </Routes>
         </div>
         <Footer />
