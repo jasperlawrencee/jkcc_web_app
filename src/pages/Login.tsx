@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth'
 import { IoLogoGoogle } from 'react-icons/io5'
-import auth from 'src/config/firebaseConfig'
+import { auth } from 'src/config/firebaseConfig'
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -26,20 +26,33 @@ export const Login = () => {
     })
   }
 
+  const validator = (email: string, password: string) => {
+    if (!email || !password) {
+      setError('Please fill in all fields');
+      return false;
+    }
+    return true;
+  }
+
   const signInWithEmail = async () => {
     setLoggingIn(true);
     setError('');
 
-    signInWithEmailAndPassword(auth, email, password)
-    .then(response => {
-      console.log("User signed in: ", response.user.uid);
-      navigate('/');
-    })
-    .catch(error => {
-      console.log(error);
-      setError(error.message);
+    if (!validator(email, password)) {
       setLoggingIn(false);
-    })
+      return;
+    } else {
+      signInWithEmailAndPassword(auth, email, password)
+      .then(response => {
+        console.log("User signed in: ", response.user.uid);
+        navigate('/');
+      })
+      .catch(error => {
+        console.log(error);
+        setError(error.message);
+        setLoggingIn(false);
+      })
+    }
   }
 
   return (

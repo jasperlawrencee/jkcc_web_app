@@ -10,12 +10,26 @@ import { Footer } from './components/Footer';
 import About from './pages/About';
 import React from 'react';
 import Admin from './pages/Admin';
+import { Bounce, ToastContainer } from 'react-toastify';
 
 export default function App() {
   return (
     <Router>
       <div className="overflow-hidden w-full bg-white text-zinc-800">
         <Topbar />
+        <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+        />
         <div className="content">
           <Routes>
             <Route path='/' element={<Home />} />

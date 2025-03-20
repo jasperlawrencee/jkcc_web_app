@@ -2,7 +2,11 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth'
 import { IoLogoGoogle } from 'react-icons/io5'
-import auth from 'src/config/firebaseConfig'
+import { auth, db} from 'src/config/firebaseConfig'
+import { doc, setDoc } from 'firebase/firestore'
+import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { Bounce, ToastContainer, toast } from 'react-toastify';
+
 
 export const Signup = () => {
   const navigate = useNavigate();
@@ -21,6 +25,11 @@ export const Signup = () => {
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
+  const [birthDay, setBirthDay] = useState('');
+  const [birthMonth, setBirthMonth] = useState('');
+  const [birthYear, setBirthYear] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const signUpWithGoogle = async () => {
     setSigningUp(true);
@@ -37,17 +46,67 @@ export const Signup = () => {
   }
 
   const signUpWithEmail = async () => {
-    if (password !== confirmPassword) {
-      setError("Passwords do not match!")
-      return;
-    }
-
     setSigningUp(true)
     setError('')
 
+    // user object instance to pass to firestore
+    const userToDB = new User(
+      `${firstName} ${middleName} ${lastName}`,
+      email,
+      password,
+      phone,
+      street,
+      state,
+      city,
+      postalCode,
+      new Date(`${birthMonth}/${birthDay}/${birthYear}`),
+    )
+
+    if (!formValidator()) {
+      setSigningUp(false)
+      return;
+    }
+
     createUserWithEmailAndPassword(auth, email, password)
-    .then(response => {
+    .then(async response => {
       console.log("User created: ", response.user.uid)
+
+      const userData = {
+        name: userToDB.name,
+        email: userToDB.email,
+        phone: userToDB.phone,
+        street: userToDB.street,
+        state: userToDB.state,
+        city: userToDB.city,
+        postalCode: userToDB.postalCode,
+        birthDay: userToDB.birthday,
+      }
+      
+      // add user to firestore
+      await setDoc(
+        doc(
+          // firestore instance
+          db,
+          // collection
+          'users',
+          // document id
+          response.user.uid),
+          // data to upload
+          userData
+        )
+
+      toast.success('🎉 Account Created!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        })
+
       navigate('/');
     })
     .catch(error => {
@@ -56,24 +115,70 @@ export const Signup = () => {
       setSigningUp(false)
     })
 
-    // add to firestore values
   }
 
-  const validator = () => {
-    setSigningUp(true);
-    if (step === 1) {
+  const signUpValidator = () => {
+    // password at least 8 characters, one uppercase, one lowercase, one number
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match!")
+      return;
+    }
+
+    if (step === 1 && password === confirmPassword) {
       if (email === '' || password === '' || confirmPassword === '') {
         setError('Please fill in all fields')
         return;
       }
-      // regex stuff here
+      if (!emailRegex.test(email)) {
+        setError('Invalid email address')
+        return;
+      }
+      if (!passwordRegex.test(password)) {
+        setError('Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number')
+        return;
+      }
       setStep(2)
     }
   }
 
+  const formValidator = () => {
+    if (
+      firstName === '' ||
+      lastName === '' ||
+      phone === '' ||
+      street === '' ||
+      state === '' ||
+      city === '' ||
+      postalCode === '' ||
+      birthDay === '' ||
+      birthMonth === '' ||
+      birthYear === ''
+    ) {
+      setError('Please fill in all fields')
+      return false;
+    }
+    return true;
+  }   
+  
   return (
     <div className='bg-slate-50 w-full h-[100vh] flex-col items-start justify-start inline-flex'>
       <div className="h-full w-full flex flex-col gap-y-2.5 px-8 py-4 items-center justify-center text-xs">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
         {/* signup "dialog" */}
         <div className="max-w-[420px] flex flex-col items-center bg-white p-8 rounded-md gap-y-2.5 shadow-md">
           {/* step 1 */}
@@ -88,23 +193,41 @@ export const Signup = () => {
               value={email}
               onChange={e => setEmail(e.target.value)}
               />
-              <input 
-              type="password"
-              placeholder='Password'
-              className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex'
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              />
-              <input 
-              type="password"
-              placeholder='Confirm Password'
-              className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex'
-              value={confirmPassword}
-              onChange={e => setConfirmPassword(e.target.value)}
-              />
+              <div className="relative w-full">
+                <input 
+                type={showPassword ? 'text' : 'password'}
+                placeholder='Password'
+                className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex'
+                value={password}
+                onChange={e => setPassword(e.target.value)}
+                />
+                <button
+                type='button'
+                className='absolute right-4 top-2.5'
+                onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <IoEyeOffOutline size={15}/> : <IoEyeOutline size={15}/>}
+                </button>
+              </div>
+              <div className="relative w-full">
+                <input 
+                type={showConfirmPassword ? 'text' : 'password'}
+                placeholder='Confirm Password'
+                className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex'
+                value={confirmPassword}
+                onChange={e => setConfirmPassword(e.target.value)}
+                />
+                <button
+                type='button'
+                className='absolute right-4 top-2.5'
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  {showConfirmPassword ? <IoEyeOffOutline size={15}/> : <IoEyeOutline size={15}/>}
+                </button>
+              </div>
               <button 
               className='px-4 py-2 bg-zinc-800 text-slate-50 rounded-md justify-center items-center w-full'
-              onClick={validator}
+              onClick={signUpValidator}
               disabled={signingUp}
               >
                 Sign In with Email
@@ -156,6 +279,41 @@ export const Signup = () => {
                 onChange={e => setLastName(e.target.value)}
                 />
               {/* birthday component here */}
+              <div className="flex flex-row gap-2.5 justify-around w-full">
+                <select
+                  className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex text-gray-400'
+                  value={birthDay}
+                  onChange={e => setBirthDay(e.target.value)}
+                >
+                  <option value="">Day</option>
+                  {[...Array(31).keys()].map(day => (
+                    <option key={day + 1} value={day + 1}>{day + 1}</option>
+                  ))}
+                </select>
+                <select
+                  className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex text-gray-400'
+                  value={birthMonth}
+                  onChange={e => setBirthMonth(e.target.value)}
+                >
+                  <option value="">Month</option>
+                  {[
+                    'January', 'February', 'March', 'April', 'May', 'June',
+                    'July', 'August', 'September', 'October', 'November', 'December'
+                  ].map((month, index) => (
+                    <option key={index + 1} value={index + 1}>{month}</option>
+                  ))}
+                </select>
+                <select
+                  className='w-full px-4 py-2 rounded-md border inline-flex text-gray-400'
+                  value={birthYear}
+                  onChange={e => setBirthYear(e.target.value)}
+                >
+                  <option value="">Year</option>
+                  {[...Array(100).keys()].map(year => (
+                    <option key={year + 1925} value={year + 1925}>{year + 1925}</option>
+                  ))}
+                </select>
+              </div>
               <div className="text-center text-sm font-normal w-full flex">Contact Details</div>
               <input
                 className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex' 
@@ -183,7 +341,7 @@ export const Signup = () => {
                 <input
                 className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex' 
                 type="text" 
-                placeholder='State / City'
+                placeholder='State / Province'
                 value={state}
                 onChange={e => setState(e.target.value)}
                 />
@@ -197,15 +355,53 @@ export const Signup = () => {
               />
               <button 
               className='px-4 py-2 bg-zinc-800 text-slate-50 rounded-md justify-center items-center w-full'
-              onClick={signUpWithEmail}
               disabled={signingUp}
+              onClick={signUpWithEmail}
               >
                 Submit
               </button>
+              {error && <div className='text-red-500 text-xs'>{error}</div>}
             </>
           )}
         </div>
       </div>
     </div>
   )
+}
+
+class User {
+    
+  name:string = '';
+  email:string = '';
+  password:string = '';
+  phone:string = '';
+  street:string = '';
+  state:string = '';
+  city:string = '';
+  postalCode:string = '';
+  birthday:Date = new Date();
+
+  constructor(
+    name:string,
+    email:string, 
+    password:string, 
+    phone:string, 
+    street:string, 
+    state:string, 
+    city:string, 
+    postalCode:string, 
+    birthday:Date,
+  ) {
+      this.name = name;
+      this.email = email;
+      this.password = password;
+      this.phone = phone;
+      this.street = street;
+      this.state = state;
+      this.city = city;
+      this.postalCode = postalCode;
+      this.birthday = new Date();
+  }
+
+
 }
