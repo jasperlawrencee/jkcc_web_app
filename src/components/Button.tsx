@@ -16,9 +16,10 @@ export const PrimaryButton = ({ onClick, label, icon }: ButtonProps) => {
   return (
     <button 
     onClick={onClick}
-    className='bg-zinc-800 rounded-lg px-3 py-2'
+    className='flex w-fit bg-zinc-800 rounded-lg px-3 py-2 text-white'
     >
         {label}
+        {icon}
     </button>
   )
 }

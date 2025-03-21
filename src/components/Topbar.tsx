@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { 
   IoMenu, 
   IoChevronBackOutline, 
@@ -10,13 +10,28 @@ import {
 import logo from "../assets/jkccLogo.png"
 import { LuArrowRight } from "react-icons/lu";
 import React from "react";
+import { PrimaryButton } from "./Button";
+import { auth } from "src/config/firebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 
 export const Topbar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLoggedIn(true)
+      } else {
+        setIsLoggedIn(false)
+      }
+    })
+    return () => unsubscribe();
+  }, []);
 
   return (
     <div className="relative w-full">
@@ -44,7 +59,7 @@ export const Topbar = () => {
         </div>
 
         {/* Login Tab */}
-          <div className="text-sm font-semibold items-center justify-end flex gap-x-4">
+          {!isLoggedIn && <div className="text-sm font-semibold items-center justify-end flex gap-x-4">
             <a href="/login" className="hidden lg:flex hover:underline text-zinc-800">
               Login
             </a>
@@ -56,7 +71,11 @@ export const Topbar = () => {
               className="hidden lg:flex"
               />
             </a>
-          </div>
+          </div>}
+          {isLoggedIn && 
+          <a href="/under-construction">
+            {auth.currentUser?.displayName}
+          </a>}
       </div>
 
       {/* Sidebar */}
@@ -64,10 +83,12 @@ export const Topbar = () => {
         <div className="fixed top-20 left-0 w-full h-[calc(100vh-80px)] text-zinc-800 flex text-left space-y-1 list-none z-40 lg:hidden">
           <div className="w-[45%] bg-white h-full p-4">
           <div className="flex justify-between w-full items-center mb-4">
-            <div>
+            <div className="flex gap-x-2 items-center">
               <button onClick={toggleSidebar}>
                 <IoChevronBackOutline size={20} />
               </button>
+              {/* name here */}
+              <p className="text-xl font-semibold">JKCC</p>
             </div>
           </div>
 
@@ -116,7 +137,15 @@ export const Topbar = () => {
               Browse all categories
             </a>
           </li>
+          {isLoggedIn && <PrimaryButton
+          onClick={() => {
+            console.log("logging out");
+            auth.signOut();
+          }}
+          label="Log Out"
+          />}
           </div>
+          {/* spacer div */}
           <div className="w-[55%] bg-white opacity-50 h-[100%]"></div>
         </div>
       )}

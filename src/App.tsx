@@ -11,12 +11,14 @@ import About from './pages/About';
 import React from 'react';
 import Admin from './pages/Admin';
 import { Bounce, ToastContainer } from 'react-toastify';
+import AuthContext from './components/AuthContext';
 
 export default function App() {
   return (
     <Router>
       <div className="overflow-hidden w-full bg-white text-zinc-800">
         <Topbar />
+
         <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -30,6 +32,7 @@ export default function App() {
         theme="light"
         transition={Bounce}
         />
+
         <div className="content">
           <Routes>
             <Route path='/' element={<Home />} />
@@ -38,8 +41,8 @@ export default function App() {
             <Route path='/register' element={<Signup/>} />
             <Route path='/orders' element={<Orders/>} />
             <Route path='/about' element={<About/> }/>
-            <Route path='/under-construction' element={<Cooking/>} />
-            <Route path='/admin' element={<Admin/>} />
+            <Route path='/under-construction' element={<AuthContext> <Cooking/></AuthContext>} />
+            <Route path='/admin' element={<AuthContext> <Admin/></AuthContext>} />
           </Routes>
         </div>
         <Footer />
