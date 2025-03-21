@@ -80,11 +80,11 @@ export const Login = () => {
 
           {/* Signin with email and password button */}
           <button 
-          className='px-4 py-2 bg-zinc-800 text-slate-50 rounded-md justify-center items-center w-full'
+          className={`px-4 py-2 rounded-md justify-center items-center w-full ${loggingIn ? 'bg-gray-300' : 'bg-zinc-800 text-slate-50'}`}
           onClick={signInWithEmail}
           disabled={loggingIn}
           >
-            Sign In with Email
+            {loggingIn ? 'Logging In...' : 'Log In'}
           </button>
           {/* Display error message */}
           {error && <div className='text-red-500 text-xs'>{error}</div>}

@@ -30,13 +30,47 @@ export const Signup = () => {
   const [birthYear, setBirthYear] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const bday = new Date(`${birthMonth}/${birthDay}/${birthYear}`);
 
   const signUpWithGoogle = async () => {
     setSigningUp(true);
 
     signInWithPopup(auth, new GoogleAuthProvider())
-    .then(response => {
-      console.log("User created: ", response.user.uid)
+    .then(async response => {
+
+      const userData = {
+        name: response.user.displayName,
+        email: response.user.email,
+        phone: response.user.phoneNumber,
+        street: '',
+        state: '',
+        city: '',
+        postalCode: '',
+        birthDay: '',
+        role: "user",
+        verified: response.user.emailVerified,
+      }
+
+      await setDoc(
+        doc (
+          db,
+          'users',
+          response.user.uid
+        ),
+        userData,
+      )
+
+      toast.success('🎉 Account Created!', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        })
       navigate('/')
     })
     .catch(error => {
@@ -48,40 +82,31 @@ export const Signup = () => {
   const signUpWithEmail = async () => {
     setSigningUp(true)
     setError('')
-
-    // user object instance to pass to firestore
-    const userToDB = new User(
-      `${firstName} ${middleName} ${lastName}`,
-      email,
-      password,
-      phone,
-      street,
-      state,
-      city,
-      postalCode,
-      new Date(`${birthMonth}/${birthDay}/${birthYear}`),
-    )
-
+    
     if (!formValidator()) {
       setSigningUp(false)
       return;
     }
+
+    // user object instance to pass to firestore
 
     createUserWithEmailAndPassword(auth, email, password)
     .then(async response => {
       console.log("User created: ", response.user.uid)
 
       const userData = {
-        name: userToDB.name,
-        email: userToDB.email,
-        phone: userToDB.phone,
-        street: userToDB.street,
-        state: userToDB.state,
-        city: userToDB.city,
-        postalCode: userToDB.postalCode,
-        birthDay: userToDB.birthday,
+        name: `${firstName} ${middleName} ${lastName}`,
+        email: email,
+        phone: phone,
+        street: street,
+        state: state,
+        city: city,
+        postalCode: postalCode,
+        birthDay: bday,
+        role: "user",
+        verified: false,
       }
-      
+
       // add user to firestore
       await setDoc(
         doc(
@@ -114,7 +139,7 @@ export const Signup = () => {
       setError(error.message)
       setSigningUp(false)
     })
-
+    // TODO: login user after creating account
   }
 
   const signUpValidator = () => {
@@ -154,8 +179,11 @@ export const Signup = () => {
       city === '' ||
       postalCode === '' ||
       birthDay === '' ||
+      birthDay === 'Day' ||
       birthMonth === '' ||
-      birthYear === ''
+      birthMonth === 'Month' ||
+      birthYear === '' ||
+      birthYear === 'Year'
     ) {
       setError('Please fill in all fields')
       return false;
@@ -281,7 +309,7 @@ export const Signup = () => {
               {/* birthday component here */}
               <div className="flex flex-row gap-2.5 justify-around w-full">
                 <select
-                  className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex text-gray-400'
+                  className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex'
                   value={birthDay}
                   onChange={e => setBirthDay(e.target.value)}
                 >
@@ -291,7 +319,7 @@ export const Signup = () => {
                   ))}
                 </select>
                 <select
-                  className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex text-gray-400'
+                  className='w-full px-4 py-2 rounded-md border justify-start items-center inline-flex'
                   value={birthMonth}
                   onChange={e => setBirthMonth(e.target.value)}
                 >
@@ -304,13 +332,13 @@ export const Signup = () => {
                   ))}
                 </select>
                 <select
-                  className='w-full px-4 py-2 rounded-md border inline-flex text-gray-400'
+                  className='w-full px-4 py-2 rounded-md border inline-flex'
                   value={birthYear}
                   onChange={e => setBirthYear(e.target.value)}
                 >
                   <option value="">Year</option>
                   {[...Array(100).keys()].map(year => (
-                    <option key={year + 1925} value={year + 1925}>{year + 1925}</option>
+                    <option key={year + 1950} value={year + 1950}>{year + 1950}</option>
                   ))}
                 </select>
               </div>
@@ -354,11 +382,11 @@ export const Signup = () => {
                 onChange={e => setPostalCode(e.target.value)}
               />
               <button 
-              className='px-4 py-2 bg-zinc-800 text-slate-50 rounded-md justify-center items-center w-full'
+              className={`px-4 py-2 rounded-md justify-center items-center w-full ${signingUp ? 'bg-gray-300' : 'bg-zinc-800 text-slate-50'}`}
               disabled={signingUp}
               onClick={signUpWithEmail}
               >
-                Submit
+                {signingUp ? 'Signing Up...' : 'Sign Up'}
               </button>
               {error && <div className='text-red-500 text-xs'>{error}</div>}
             </>
@@ -367,41 +395,4 @@ export const Signup = () => {
       </div>
     </div>
   )
-}
-
-class User {
-    
-  name:string = '';
-  email:string = '';
-  password:string = '';
-  phone:string = '';
-  street:string = '';
-  state:string = '';
-  city:string = '';
-  postalCode:string = '';
-  birthday:Date = new Date();
-
-  constructor(
-    name:string,
-    email:string, 
-    password:string, 
-    phone:string, 
-    street:string, 
-    state:string, 
-    city:string, 
-    postalCode:string, 
-    birthday:Date,
-  ) {
-      this.name = name;
-      this.email = email;
-      this.password = password;
-      this.phone = phone;
-      this.street = street;
-      this.state = state;
-      this.city = city;
-      this.postalCode = postalCode;
-      this.birthday = new Date();
-  }
-
-
 }
