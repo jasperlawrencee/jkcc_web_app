@@ -8,16 +8,24 @@ import {
   IoInformationCircle, 
 } from "react-icons/io5";
 import logo from "../assets/jkccLogo.png";
-import { LuArrowRight } from "react-icons/lu";
+import { LuArrowRight, LuLogOut } from "react-icons/lu";
 import { PrimaryButton } from "./Button";
 import { useAuth } from "./AuthContext";
 import { auth } from "src/config/firebaseConfig";
 import ScreenLoader from "./ScreenLoader";
+import ModalLogout from "./ModalLogout";
 
 export const Topbar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const { currentUser, isLoggedIn } = useAuth();
   const [loading, setLoading] = useState(true); // Add a loading state
+  // const [dialogContent, setDialogContent] = useState<React.ReactNode>(null);
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const { currentUser, isLoggedIn } = useAuth();
+
+  const handleLogout = () => {
+    auth.signOut();
+    setDialogOpen(false);
+  }
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev);
@@ -79,13 +87,17 @@ export const Topbar = () => {
             <a href="/under-construction">
               {currentUser?.displayName || "User"}
             </a>
-            <PrimaryButton
-              onClick={() => {
-                console.log("logging out");
-                auth.signOut();
-              }}
-              label="Log Out"
-            />
+            <button
+            onClick={() => setDialogOpen(true)}
+            >
+              <LuLogOut />
+            </button>
+            {isDialogOpen && (
+              <ModalLogout 
+                onClose={() => setDialogOpen(false)}
+                onConfirm={() => handleLogout()}
+              />
+            )}
           </div>
         )}
       </div>
@@ -150,10 +162,7 @@ export const Topbar = () => {
             </li>
             {isLoggedIn && (
               <PrimaryButton
-                onClick={() => {
-                  console.log("logging out");
-                  auth.signOut();
-                }}
+                onClick={() => setDialogOpen(true)}
                 label="Log Out"
               />
             )}
