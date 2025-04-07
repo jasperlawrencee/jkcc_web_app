@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { 
   IoMenu, 
   IoChevronBackOutline, 
@@ -7,31 +7,34 @@ import {
   IoBag, 
   IoInformationCircle, 
 } from "react-icons/io5";
-import logo from "../assets/jkccLogo.png"
+import logo from "../assets/jkccLogo.png";
 import { LuArrowRight } from "react-icons/lu";
-import React from "react";
 import { PrimaryButton } from "./Button";
+import { useAuth } from "./AuthContext";
 import { auth } from "src/config/firebaseConfig";
-import { onAuthStateChanged } from "firebase/auth";
+import ScreenLoader from "./ScreenLoader";
 
 export const Topbar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { currentUser, isLoggedIn } = useAuth();
+  const [loading, setLoading] = useState(true); // Add a loading state
 
   const toggleSidebar = () => {
     setSidebarOpen((prev) => !prev);
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setIsLoggedIn(true)
-      } else {
-        setIsLoggedIn(false)
-      }
-    })
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setLoading(false); // Set loading to false once auth state is determined
+    });
+
     return () => unsubscribe();
   }, []);
+
+  if (loading) {
+    // Render the full-screen loader while checking auth state
+    return <ScreenLoader />;
+  }
 
   return (
     <div className="relative w-full">
@@ -59,93 +62,102 @@ export const Topbar = () => {
         </div>
 
         {/* Login Tab */}
-          {!isLoggedIn && <div className="text-sm font-semibold items-center justify-end flex gap-x-4">
+        {!isLoggedIn && (
+          <div className="text-sm font-semibold items-center justify-end flex gap-x-4">
             <a href="/login" className="hidden lg:flex hover:underline text-zinc-800">
               Login
             </a>
-            {/* change button when small screen */}
             <a href="/register"
-            className="flex hover:underline text-white bg-zinc-800 rounded-xl px-4 py-2 items-center justify-center gap-x-2 w-fit min-w-[120px]">
+              className="flex hover:underline text-white bg-zinc-800 rounded-xl px-4 py-2 items-center justify-center gap-x-2 w-fit min-w-[120px]">
               Sign Up Now
-              <LuArrowRight 
-              className="hidden lg:flex"
-              />
+              <LuArrowRight className="hidden lg:flex" />
             </a>
-          </div>}
-          {isLoggedIn && 
-          <a href="/under-construction">
-            {auth.currentUser?.displayName}
-          </a>}
+          </div>
+        )}
+        {isLoggedIn && (
+          <div className="text-sm font-semibold items-center justify-end flex gap-x-4">
+            <a href="/under-construction">
+              {currentUser?.displayName || "User"}
+            </a>
+            <PrimaryButton
+              onClick={() => {
+                console.log("logging out");
+                auth.signOut();
+              }}
+              label="Log Out"
+            />
+          </div>
+        )}
       </div>
 
       {/* Sidebar */}
       {isSidebarOpen && (
         <div className="fixed top-20 left-0 w-full h-[calc(100vh-80px)] text-zinc-800 flex text-left space-y-1 list-none z-40 lg:hidden">
           <div className="w-[45%] bg-white h-full p-4">
-          <div className="flex justify-between w-full items-center mb-4">
-            <div className="flex gap-x-2 items-center">
-              <button onClick={toggleSidebar}>
-                <IoChevronBackOutline size={20} />
-              </button>
-              {/* name here */}
-              <p className="text-xl font-semibold">JKCC</p>
+            <div className="flex justify-between w-full items-center mb-4">
+              <div className="flex gap-x-2 items-center">
+                <button onClick={toggleSidebar}>
+                  <IoChevronBackOutline size={20} />
+                </button>
+                <p className="text-xl font-semibold">JKCC</p>
+              </div>
             </div>
-          </div>
 
-          <li>
-            <a
-              href="/"
-              className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
-            >
-              <IoHome />
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="/under-construction"
-              className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
-            >
-              <IoGrid />
-              Brands
-            </a>
-          </li>
-          <li>
-            <a
-              href="/under-construction"
-              className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
-            >
-              <IoBag />
-              Shop
-            </a>
-          </li>
-          <li>
-            <a
-              href="/about"
-              className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
-            >
-              <IoInformationCircle />
-              About Us
-            </a>
-          </li>
-          <div className="h-[2px] w-[90%] bg-slate-50 opacity-5"></div>
-          <li>
-            <a
-              href="/under-construction"
-              className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
-            >
-              Browse all categories
-            </a>
-          </li>
-          {isLoggedIn && <PrimaryButton
-          onClick={() => {
-            console.log("logging out");
-            auth.signOut();
-          }}
-          label="Log Out"
-          />}
+            <li>
+              <a
+                href="/"
+                className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
+              >
+                <IoHome />
+                Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="/under-construction"
+                className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
+              >
+                <IoGrid />
+                Brands
+              </a>
+            </li>
+            <li>
+              <a
+                href="/under-construction"
+                className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
+              >
+                <IoBag />
+                Shop
+              </a>
+            </li>
+            <li>
+              <a
+                href="/about"
+                className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
+              >
+                <IoInformationCircle />
+                About Us
+              </a>
+            </li>
+            <div className="h-[2px] w-[90%] bg-slate-50 opacity-5"></div>
+            <li>
+              <a
+                href="/under-construction"
+                className="p-2 rounded-lg w-full flex justify-start items-center hover:bg-zinc-600 gap-x-2"
+              >
+                Browse all categories
+              </a>
+            </li>
+            {isLoggedIn && (
+              <PrimaryButton
+                onClick={() => {
+                  console.log("logging out");
+                  auth.signOut();
+                }}
+                label="Log Out"
+              />
+            )}
           </div>
-          {/* spacer div */}
           <div className="w-[55%] bg-white opacity-50 h-[100%]"></div>
         </div>
       )}

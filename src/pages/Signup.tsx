@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth'
 import { IoLogoGoogle } from 'react-icons/io5'
 import { auth, db} from 'src/config/firebaseConfig'
 import { doc, setDoc } from 'firebase/firestore'
@@ -90,10 +90,14 @@ export const Signup = () => {
 
     // user object instance to pass to firestore
 
-    createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
     .then(async response => {
       console.log("User created: ", response.user.uid)
 
+      await updateProfile(response.user, {
+        displayName: `${firstName} ${lastName}`
+      })
+    
       const userData = {
         name: `${firstName} ${middleName} ${lastName}`,
         email: email,
@@ -139,7 +143,6 @@ export const Signup = () => {
       setError(error.message)
       setSigningUp(false)
     })
-    // TODO: login user after creating account
   }
 
   const signUpValidator = () => {
@@ -273,7 +276,7 @@ export const Signup = () => {
                 Sign In with Google
               </button>
               <div className="flex gap-2.5 items-center justify-center w-fit text-zinc-800">
-                Don't have an account? <a href="/login" className='underline'>Sign Up</a>
+                Already have an account? <a href="/login" className='underline'>Log In</a>
               </div>
             </>
           )}

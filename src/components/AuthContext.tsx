@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { auth } from 'src/config/firebaseConfig';
 
-export interface IAuthRouteProps {
-    children: React.ReactNode;
+interface AuthContextProps {
+  currentUser: User | null;
+  isLoggedIn: boolean;
 }
 
-const AuthRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
-    const { children } = props;
-    const auth = getAuth();
-    const navigate = useNavigate();
-    const [ loading, setLoading ] = useState(true);
+const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setLoading(false);
-                console.log("user logged in", auth.currentUser?.uid);
-            } else {
-                console.log('user not logged in');
-                setLoading(false);
-                navigate('/login')
-            }
-        });
-        return () => unsubscribe();
-    }, [auth, navigate]);
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    if (loading) return <p></p>;
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      setIsLoggedIn(!!user);
+    });
 
-    return <div>{ children }</div>;
+    return () => unsubscribe();
+  }, []);
 
-}
+  return (
+    <AuthContext.Provider value={{ currentUser, isLoggedIn }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
 
-export default AuthRoute
+export const useAuth = (): AuthContextProps => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
+};
