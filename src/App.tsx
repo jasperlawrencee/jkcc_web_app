@@ -28,7 +28,7 @@ export default function App() {
       theme="light"
       transition={Bounce}
       />
-      
+
       <div className="overflow-hidden w-full bg-white text-zinc-800">
         <Topbar />
         <div className="content">
@@ -40,7 +40,6 @@ export default function App() {
             <Route path='/orders' element={<Orders/>} />
             <Route path='/about' element={<About/> }/>
             <Route path='/under-construction' element={<Cooking/>} />
-            <Route path='/admin' element={<Admin/>} />
           </Routes>
         </div>
         <Footer />

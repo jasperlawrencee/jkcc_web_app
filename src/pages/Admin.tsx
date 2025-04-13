@@ -1,8 +1,9 @@
 import React from 'react'
 
 const Admin = () => {
+
   return (
-    <div>Logged in as admin</div>
+    <div className="h-[100vh]">Admin</div>
   )
 }
 

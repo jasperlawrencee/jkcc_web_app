@@ -50,6 +50,30 @@ export const Home = () => {
     tabFocus: true
   };
 
+  const offeringIcons = [
+    <LuPackage size={24}/>,
+    <LuRefreshCw size={24}/>,
+    <LuGift size={24}/>,
+    <LuLock size={24}/>,
+    <LuHandshake size={24}/>
+  ]
+  
+  const offeringTitle = [
+    "Free Shipping",
+    "Warranty Replacement",
+    "Special Gifts",
+    "Secured Payemnts",
+    "Support 24/7",
+  ]
+  
+  const offeringText = [
+    "For All Orders Over ₱5,000",
+    "For Item Defects",
+    "On Laptop or Computer Repairs",
+    "Payment Cards Accepted",
+    "Contact Us Anytime",
+  ]
+
   return (
     <div className="h-fit w-full overflow-hidden">
       {/* Welcome */}
@@ -93,7 +117,7 @@ export const Home = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:flex justify-center gap-16 px-8 py-16">
         {offeringIcons.map((icon, index) => (
           <div 
-          key={index}
+          key={`offering-${index}`}
           className="flex flex-col items-center text-center gap-y-4">
             {icon}
             <div className="flex flex-col">
@@ -128,7 +152,9 @@ export const Home = () => {
         <p className='text-3xl md:text-4xl lg:text-5xl font-bold text-center w-full'>Grab Your own PC in 3 Steps</p>
         <div className="flex flex-col md:flex-row w-full h-fit justify-center items-center md:items-start gap-x-16 gap-y-8">
           {images.map((image, index) => (
-            <div className="flex flex-col justify-between items-center gap-y-4 max-w-[350px] md:h-[350px] w-fit text-center">
+            <div 
+            key={`step-${index}`}
+            className="flex flex-col justify-between items-center gap-y-4 max-w-[350px] md:h-[350px] w-fit text-center">
               <div className="flex flex-col">
                 <div className="font-semibold text-2xl leading-9">{titles[index]}</div>
                 <div className='leading-7'>{text[index]}</div>
@@ -182,27 +208,3 @@ export const Home = () => {
     </div>
   )
 }
-
-const offeringIcons = [
-  <LuPackage size={24}/>,
-  <LuRefreshCw size={24}/>,
-  <LuGift size={24}/>,
-  <LuLock size={24}/>,
-  <LuHandshake size={24}/>
-]
-
-const offeringTitle = [
-  "Free Shipping",
-  "Warranty Replacement",
-  "Special Gifts",
-  "Secured Payemnts",
-  "Support 24/7",
-]
-
-const offeringText = [
-  "For All Orders Over ₱5,000",
-  "For Item Defects",
-  "On Laptop or Computer Repairs",
-  "Payment Cards Accepted",
-  "Contact Us Anytime",
-]

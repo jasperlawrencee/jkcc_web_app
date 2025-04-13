@@ -24,3 +24,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# service account
+/jasperkissa-c31ed-firebase-adminsdk-mdki4-99adcb1fd9.json

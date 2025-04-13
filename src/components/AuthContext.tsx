@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from 'src/config/firebaseConfig';
+import { checkAdminClient } from 'src/utils';
 
 interface AuthContextProps {
   currentUser: User | null;
@@ -21,6 +22,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return () => unsubscribe();
   }, []);
+
+  checkAdminClient(currentUser);
 
   return (
     <AuthContext.Provider value={{ currentUser, isLoggedIn }}>
